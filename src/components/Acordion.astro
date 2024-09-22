@@ -1,0 +1,80 @@
+---
+const { tittleAcordion, descriptionAcordion } = Astro.props;
+const { styleHeader, styleContent } = Astro.props;
+---
+
+<section>
+  <div class="accordion">
+    <div class="accordion-item">
+      <h6 class=`accordion-header ${styleHeader}`>{tittleAcordion}</h6>
+      <div class="accordion-content">
+        <div class=`accordion-content-inner ${styleContent}`>
+          <p>
+            {descriptionAcordion}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .accordion {
+    border-radius: 4px;
+  }
+  .accordion-item {
+    border-bottom: 1px solid #ccc;
+  }
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  .accordion-header {
+    padding: 15px;
+    cursor: pointer;
+    position: relative;
+  }
+  .accordion-header::after {
+    content: "+";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5em;
+    transition: transform 0.3s ease;
+  }
+  .accordion-header.active::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  .accordion-content-inner {
+    padding: 15px;
+  }
+</style>
+
+<script>
+  document.querySelectorAll(".accordion-header").forEach((header) => {
+    header.addEventListener("click", () => {
+      const content = header.nextElementSibling as HTMLElement | null;
+      const isOpen = header.classList.contains("active");
+
+      // Cerrar todos los acordeones
+      document.querySelectorAll(".accordion-header").forEach((h) => {
+        h.classList.remove("active");
+        const siblingContent = h.nextElementSibling as HTMLElement | null;
+        if (siblingContent) {
+          siblingContent.style.maxHeight = null;
+        }
+      });
+
+      // Si el acordeón no estaba abierto, ábrelo
+      if (!isOpen && content) {
+        header.classList.add("active");
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  });
+</script>

@@ -1,0 +1,28 @@
+---
+const { text, estado } = Astro.props;
+---
+
+<span class=`badge ${estado}`>{text}</span>
+
+<style>
+  .badge {
+    display: inline-block;
+    padding: 5px;
+    font-size: 0.75em;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 25px;
+  }
+  .badge.nuevo {
+    background-color: #3b82f6;
+  }
+  .badge.aprovado {
+    background-color: #22c55e;
+  }
+  .badge.borrado {
+    background-color: #f56565;
+  }
+  .badge.pendiente {
+    background-color: #eab308;
+  }
+</style>

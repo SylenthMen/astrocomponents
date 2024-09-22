@@ -1,0 +1,17 @@
+---
+const { name, image, size, fallback } = Astro.props;
+---
+
+<div class="avatar">
+  {
+    image ? (
+      <img src={image} alt={name} class={`rounded-full ${size}`} />
+    ) : (
+      <div
+        class={`rounded-full ${size} bg-neutral-950 flex items-center justify-center text-white uppercase`}
+      >
+        {fallback}
+      </div>
+    )
+  }
+</div>
