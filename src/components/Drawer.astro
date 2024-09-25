@@ -1,0 +1,117 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  styleTitle?: string;
+  styleDescription?: string;
+  drawerStyle?: string;
+}
+
+const { title, description } = Astro.props;
+const {styleTitle = "text-white"} = Astro.props;
+const { styleDescription = "text-white"} = Astro.props;
+const { drawerStyle = "bg-white text-black"} = Astro.props;
+---
+
+<div class="drawer-wrapper">
+  <button id="drawerTrigger" class="drawer-trigger">Abrir Drawer</button>
+  <div id="drawer" class=`drawer ${drawerStyle}`>
+    <div class="drawer-content">
+      <div class="drawer-header">
+        <h2 class=`${styleTitle}`>{title}</h2>
+        {description && <p class=`${styleDescription}`>{description}</p>}
+        <button id="drawerClose" class="drawer-close ">&times;</button>
+      </div>
+      <div class="drawer-body">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .drawer-wrapper {
+    position: relative;
+  }
+
+  .drawer-trigger {
+    padding: 10px 20px;
+    background-color: #171717;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .drawer {
+    position: fixed;
+    top: 0;
+    left: -100%;  /*PUEDES CAMBIAR LA POSICION EN LA QUE SALE EL DRAWER*/ 
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+    transition: left 0.3s ease-in-out; /*PUEDES CAMBIAR LA POSICION EN LA QUE SALE EL DRAWER*/ 
+    z-index: 1000;
+  }
+
+  .drawer.open {
+    left: 0; /*PUEDES CAMBIAR LA POSICION EN LA QUE SALE EL DRAWER*/ 
+  }
+
+  .drawer-content {
+    padding: 20px;
+  }
+
+  .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  @media (min-width: 640px) {
+    .drawer {
+      max-width: 400px;
+    }
+  }
+</style>
+
+<script>
+  const drawer = document.getElementById("drawer") as HTMLElement;
+  const drawerTrigger = document.getElementById(
+    "drawerTrigger"
+  ) as HTMLButtonElement;
+  const drawerClose = document.getElementById(
+    "drawerClose"
+  ) as HTMLButtonElement;
+
+  function openDrawer() {
+    drawer.classList.add("open");
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove("open");
+  }
+
+  drawerTrigger.addEventListener("click", openDrawer);
+  drawerClose.addEventListener("click", closeDrawer);
+
+  // Cerrar el drawer al hacer clic fuera de él
+  document.addEventListener("click", (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (
+      !drawer.contains(target) &&
+      !drawerTrigger.contains(target) &&
+      drawer.classList.contains("open")
+    ) {
+      closeDrawer();
+    }
+  });
+</script>
