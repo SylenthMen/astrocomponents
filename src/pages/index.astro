@@ -1,11 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-import Acordion from "../components/Acordion.astro";
-import AlertDialog from "../components/AlertDialog.astro";
-import Avatar from "../components/Avatar.astro";
-import Badge from "../components/Badge.astro";
-import Button from "../components/Button.astro";
+import BadgeAnimado from "../components/BadgeAnimado.astro";
 
 const title = "Astro Starter Kit";
 const description = "Starter kit with Astro and Tailwind CSS";
@@ -13,33 +8,18 @@ const description = "Starter kit with Astro and Tailwind CSS";
 
 <Layout title={title} description={description}>
   <main class="container mx-auto">
-    <h1 class="text-4xl font-bold">Welcome to Astro</h1>
-    <p class="text-xl">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat.
-    </p>
-    <Acordion
-      tittleAcordion="Acordion 1"
-      descriptionAcordion="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-      styleHeader="bg-blue-500 text-white"
-      styleContent="bg-blue-500 text-white"
-    />
-    <AlertDialog
-      tittleAlert="AlertDialog"
-      descriptionAlert="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-      textButton="Close"
-      styleDialog="bg-blue-500 text-white w-96"
-      styleButtonDialog="bg-blue-500 text-white"
-      colorTitle="bg-blue-500 text-white"
-      colorText="bg-blue-500 text-white"
-    />
-    <Avatar name="Manuel" size="w-16 h-16" fallback="M" />
-    <Badge text="Nuevo" estado="nuevo" />
-    <Badge text="Aprobado" estado="aprovado" />
-    <Badge text="Borrado" estado="borrado" />
-    <Badge text="Pendiente" estado="pendiente" />
-    <Button nameButton="Button" />
+    <section
+      class="flex flex-col items-center justify-center m-auto min-h-screen gap-y-4"
+    >
+      <BadgeAnimado enlace="#" texto="comenzar a usar" />
+      <h1 class="text-5xl font-bold text-center">
+        Welcome to Astro Components
+      </h1>
+      <p class="text-xl text-center text-balance">
+        una libreria de componentes para astro que consiste en copiar y pegar,
+        los puedes personalizar y usar en tus proyectos ya que utiliza
+        tailwindcss, css, javascript y html.
+      </p>
+    </section>
   </main>
 </Layout>

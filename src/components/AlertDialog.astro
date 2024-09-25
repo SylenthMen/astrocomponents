@@ -70,9 +70,9 @@ because the nesting selector cannot represent pseudo-elements. */
 </style>
 
 <script>
-  const dialogElem = document.getElementById("dialog");
-  const showBtn = document.querySelector(".show");
-  const closeBtn = document.querySelector(".close");
+  const dialogElem = document.getElementById("dialog") as HTMLDialogElement;
+  const showBtn = document.querySelector(".show") as HTMLButtonElement;
+  const closeBtn = document.querySelector(".close") as HTMLButtonElement;
 
   showBtn.addEventListener("click", () => {
     dialogElem.showModal();

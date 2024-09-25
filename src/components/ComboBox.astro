@@ -1,0 +1,160 @@
+---
+interface Language {
+  value: string;
+  label: string;
+}
+
+const languages: Language[] = [
+  { value: "javascript", label: "JavaScript" },
+  { value: "python", label: "Python" },
+  { value: "java", label: "Java" },
+  { value: "csharp", label: "C#" },
+  { value: "php", label: "PHP" },
+  { value: "ruby", label: "Ruby" },
+  { value: "go", label: "Go" },
+  { value: "typescript", label: "TypeScript" },
+];
+
+interface Props {
+  titleComboBox?: string;
+  firstOption?: string;
+}
+
+const {
+  titleComboBox = "Elige un lenguaje",
+  firstOption = "Elija un lenguaje",
+} = Astro.props;
+---
+
+<div class="combo-box-wrapper w-64">
+  <label for="language-select" class="block mb-2 font-bold text-black"
+    >{titleComboBox}</label
+  >
+  <div id="custom-select" class="relative">
+    <div
+      id="selected-option"
+      class="flex justify-between items-center cursor-pointer border border-gray-300 rounded-md p-4 bg-white text-black font-bold"
+    >
+      <span>{firstOption}</span>
+      <span class="arrow transition-transform duration-300">&#9660;</span>
+    </div>
+    <div
+      id="options-container"
+      class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md mt-1 max-h-0 overflow-hidden transition-all duration-300"
+    >
+      <input
+        type="text"
+        id="search-input"
+        class="w-full p-2 border-b border-gray-300 text-black focus:outline-none"
+        placeholder="Buscar..."
+      />
+      <ul id="options-list" class="text-black">
+        {
+          languages.map((language) => (
+            <li
+              class="p-2 hover:bg-green-500 cursor-pointer"
+              data-value={language.value}
+            >
+              {language.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initComboBox() {
+    const customSelect = document.getElementById(
+      "custom-select"
+    ) as HTMLDivElement | null;
+    const selectedOption = document.getElementById(
+      "selected-option"
+    ) as HTMLDivElement | null;
+    const optionsContainer = document.getElementById(
+      "options-container"
+    ) as HTMLDivElement | null;
+    const optionsList = document.getElementById(
+      "options-list"
+    ) as HTMLUListElement | null;
+    const searchInput = document.getElementById(
+      "search-input"
+    ) as HTMLInputElement | null;
+    const arrow = selectedOption?.querySelector(
+      ".arrow"
+    ) as HTMLSpanElement | null;
+
+    if (
+      !customSelect ||
+      !selectedOption ||
+      !optionsContainer ||
+      !optionsList ||
+      !searchInput ||
+      !arrow
+    ) {
+      console.error("One or more elements not found");
+      return;
+    }
+
+    selectedOption.addEventListener("click", () => {
+      const isOpen =
+        optionsContainer.style.maxHeight !== "0px" &&
+        optionsContainer.style.maxHeight !== "";
+      optionsContainer.style.maxHeight = isOpen
+        ? "0px"
+        : `${optionsContainer.scrollHeight}px`;
+      arrow.style.transform = isOpen ? "" : "rotate(180deg)";
+    });
+
+    optionsList.addEventListener("click", (e) => {
+      const target = e.target as HTMLLIElement;
+      if (target.tagName === "LI") {
+        const span = selectedOption.querySelector("span");
+        if (span) {
+          span.textContent = target.textContent;
+        }
+        optionsContainer.style.maxHeight = "0px";
+        arrow.style.transform = "";
+      }
+    });
+
+    searchInput.addEventListener("input", () => {
+      const filter = searchInput.value.toLowerCase();
+      const options = optionsList.getElementsByTagName("li");
+
+      for (let i = 0; i < options.length; i++) {
+        const txtValue = options[i].textContent || options[i].innerText;
+        if (txtValue) {
+          options[i].style.display = txtValue.toLowerCase().includes(filter)
+            ? ""
+            : "none";
+        }
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!customSelect.contains(e.target as Node)) {
+        optionsContainer.style.maxHeight = "0px";
+        arrow.style.transform = "";
+      }
+    });
+  }
+
+  // Ejecutar la inicialización después de que el DOM esté completamente cargado
+  document.addEventListener("DOMContentLoaded", initComboBox);
+
+  // Para compatibilidad con la navegación del lado del cliente de Astro
+  document.addEventListener("astro:page-load", initComboBox);
+</script>
+
+<style>
+  .combo-box-wrapper {
+    /* Elimina cualquier borde o línea no deseada */
+    border: none;
+    outline: none;
+  }
+  #options-container {
+    transition: all 0.3s ease-in-out;
+  }
+</style>
