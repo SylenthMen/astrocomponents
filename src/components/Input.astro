@@ -1,0 +1,21 @@
+---
+const { labelInput = "nombre del input:" } = Astro.props;
+const { styleLabel = "text-white" } = Astro.props;
+const { inputType = "text" } = Astro.props;
+const {
+  styleInput = "bg-white text-black p-4 rounded-md text-md focus:outline-none",
+} = Astro.props;
+const { placeHolder = "Escribe aquí..." } = Astro.props;
+
+const { fileAcepted = "*" } = Astro.props;
+---
+
+<div class="input-wrapper flex flex-col">
+  <label class=`${styleLabel}` for="input">{labelInput}</label>
+  <input
+    type={inputType}
+    class=`input-field ${styleInput}`
+    placeholder={placeHolder}
+    accept={fileAcepted}
+  />
+</div>
