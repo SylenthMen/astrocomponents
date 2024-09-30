@@ -1,12 +1,15 @@
 ---
 const { title = "Astro Components" } = Astro.props;
+const { callAction } = Astro.props;
 ---
 
 <nav
-  class="nav-container bg-[#151313] dark:bg-black/65 text-white lg:max-w-[1200px] md:max-w-[750px] max-w-96 m-auto p-8 translate-y-8 rounded-xl z-50 relative font-berlin dark:backdrop-blur-sm"
+  class="bg-[#151313] dark:bg-black/65 text-white lg:max-w-[1200px] md:max-w-[750px] max-w-96 m-auto p-8 translate-y-8 rounded-xl z-50 relative font-berlin dark:backdrop-blur-sm"
 >
-  <div class="nav-content">
-    <h2 class="text-white text-2xl font-extrabold">{title}</h2>
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-white text-2xl font-extrabold">{title}</h2>
+    </div>
     <div class="menu-toggle">
       <span></span>
       <span></span>
@@ -18,27 +21,17 @@ const { title = "Astro Components" } = Astro.props;
       <li><a href="#funciones">funciones</a></li>
       <li><a href="#planes">planes</a></li>
       <li class="block md:hidden">
-        <a href="#">iniciar</a>
+        <a href="#">{callAction}</a>
       </li>
     </ul>
     <a
       class="contact-button p-4 bg-white text-black rounded-lg font-bold text-2xl hover:bg-[#5600bc35] hover:text-[#5600bc] transition-all border border-transparent hover:border-[#5600bc] hover:shadow-lg hover:shadow-[#5600bc]"
-      href="#">iniciar</a
+      href="#">{callAction}</a
     >
   </div>
 </nav>
 
 <style>
-  .nav-container {
-    position: relative;
-  }
-
-  .nav-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .menu-toggle {
     display: none;
     flex-direction: column;

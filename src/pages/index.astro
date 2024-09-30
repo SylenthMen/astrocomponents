@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import BadgeAnimado from "../components/BadgeAnimado.astro";
-import NavBar from "../components/NavBar.astro";
 
 const title = "Astro Starter Kit";
 const description = "Starter kit with Astro and Tailwind CSS";
@@ -9,7 +8,7 @@ const description = "Starter kit with Astro and Tailwind CSS";
 
 <Layout title={title} description={description}>
   <main class="container mx-auto">
-    <!-- <section
+    <section
       class="flex flex-col items-center justify-center m-auto min-h-screen gap-y-4"
     >
       <BadgeAnimado enlace="#" texto="comenzar a usar" />
@@ -21,8 +20,6 @@ const description = "Starter kit with Astro and Tailwind CSS";
         los puedes personalizar y usar en tus proyectos ya que utiliza
         tailwindcss, css, javascript y html.
       </p>
-    </section> -->
-
-    <NavBar />
+    </section>
   </main>
 </Layout>
