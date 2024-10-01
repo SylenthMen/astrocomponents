@@ -1,0 +1,94 @@
+---
+export interface LinkItem {
+  href: string;
+  text: string;
+  icon: string;
+}
+
+export interface SidebarProps {
+  buttonStyles?: string;
+  sidebarStyles?: string;
+  anchorStyles?: string;
+  links: LinkItem[];
+}
+
+const defaultButtonStyles = "p-2 text-white bg-blue-500 z-50";
+const defaultSidebarStyles =
+  "fixed top-0 left-0 h-full bg-gray-800 text-white transition-all duration-300 ease-in-out";
+const { anchorStyles, links } = Astro.props;
+
+// Función para renderizar el icono SVG
+const renderIcon = (iconPath: string) => {
+  return `<svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6 text-white"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    ${iconPath}
+  </svg>`;
+};
+---
+
+<div
+  id="sidebar"
+  class={`${defaultSidebarStyles} w-16 hover:w-64 group ${Astro.props.sidebarStyles ?? ""}`}
+>
+  <button
+    id="toggleSidebar"
+    class={`${defaultButtonStyles} ${Astro.props.buttonStyles ?? ""} absolute top-4 right-4`}
+  >
+    <div class="space-y-1">
+      <span class="block w-8 h-0.5 bg-white"></span>
+      <span class="block w-8 h-0.5 bg-white"></span>
+      <span class="block w-8 h-0.5 bg-white"></span>
+    </div>
+  </button>
+
+  <nav class="mt-16">
+    <ul class="flex flex-col space-y-2">
+      {
+        links.map((link) => (
+          <li class={`flex items-center px-4 py-2 ${anchorStyles}`}>
+            <a href={link.href} class="flex items-center w-full">
+              <span class="w-8 h-8 flex items-center justify-center">
+                <Fragment set:html={renderIcon(link.icon)} />
+              </span>
+              <span class="ml-2 whitespace-nowrap overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {link.text}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
+
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const toggleButton = document.getElementById("toggleSidebar");
+
+  toggleButton.addEventListener("click", function () {
+    sidebar.classList.toggle("w-64");
+    sidebar.classList.toggle("w-16");
+  });
+
+  sidebar.addEventListener("mouseenter", function () {
+    sidebar.classList.add("w-64");
+    sidebar.classList.remove("w-16");
+  });
+
+  sidebar.addEventListener("mouseleave", function () {
+    if (!sidebar.classList.contains("pinned")) {
+      sidebar.classList.remove("w-64");
+      sidebar.classList.add("w-16");
+    }
+  });
+
+  toggleButton.addEventListener("click", function (e) {
+    e.stopPropagation();
+    sidebar.classList.toggle("pinned");
+  });
+</script>
