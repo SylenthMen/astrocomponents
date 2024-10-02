@@ -1,0 +1,78 @@
+---
+export interface ToastProps {
+  id: string;
+  message: string;
+  type?: "success" | "error" | "info" | "warning";
+  duration?: number;
+  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
+}
+
+const {
+  id,
+  message,
+  type = "info",
+  duration = 3000,
+  position = "top-right",
+} = Astro.props as ToastProps;
+
+const typeClasses = {
+  success: "bg-green-500",
+  error: "bg-red-500",
+  info: "bg-blue-500",
+  warning: "bg-yellow-500",
+};
+
+const positionClasses = {
+  "top-right": "top-4 right-4",
+  "top-left": "top-4 left-4",
+  "bottom-right": "bottom-4 right-4",
+  "bottom-left": "bottom-4 left-4",
+};
+---
+
+<div
+  id={id}
+  class={`fixed ${positionClasses[position]} p-4 rounded-md text-white shadow-lg transition-all duration-300 transform translate-y-[-100%] opacity-0 ${typeClasses[type]}`}
+  style="transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;"
+  data-duration={duration}
+>
+  {message}
+</div>
+
+<script>
+  class ToastManager {
+    private toasts: Map<string, HTMLElement> = new Map();
+
+    constructor() {
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('[id^="toast-"]').forEach((el) => {
+          this.toasts.set(el.id, el as HTMLElement);
+        });
+      });
+    }
+
+    show(id: string) {
+      const toast = this.toasts.get(id);
+      if (toast) {
+        toast.style.transform = "translateY(0)";
+        toast.style.opacity = "1";
+
+        const duration = parseInt(toast.dataset.duration || "3000", 10);
+        setTimeout(() => this.hide(id), duration);
+      }
+    }
+
+    hide(id: string) {
+      const toast = this.toasts.get(id);
+      if (toast) {
+        toast.style.transform = "translateY(-100%)";
+        toast.style.opacity = "0";
+      }
+    }
+  }
+
+  const toastManager = new ToastManager();
+
+  // Exponer el toastManager al ámbito global
+  (window as any).toastManager = toastManager;
+</script>

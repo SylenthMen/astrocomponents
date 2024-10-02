@@ -1,0 +1,65 @@
+---
+export interface SliderProps {
+  min: number;
+  max: number;
+  step: number;
+  defaultValue: number;
+  id: string;
+  name: string;
+  labelText: string;
+  sliderClass?: string;
+  labelClass?: string;
+  valueClass?: string;
+}
+
+const {
+  min,
+  max,
+  step,
+  defaultValue,
+  id,
+  name,
+  labelText,
+  sliderClass = "",
+  labelClass = "",
+  valueClass = "",
+} = Astro.props as SliderProps;
+---
+
+<div class="flex flex-col space-y-2">
+  <label for={id} class={`text-sm font-medium text-gray-700 ${labelClass}`}>
+    {labelText}
+  </label>
+  <input
+    type="range"
+    id={id}
+    name={name}
+    min={min}
+    max={max}
+    step={step}
+    value={defaultValue}
+    class={` rounded-lg appearance-none cursor-pointer  ${sliderClass}`}
+  />
+  <output for={id} class={`text-sm text-gray-500 ${valueClass}`}>
+    {defaultValue}
+  </output>
+</div>
+
+<script>
+  function updateSliderValue(
+    slider: HTMLInputElement,
+    output: HTMLOutputElement
+  ) {
+    output.value = slider.value;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const sliders = document.querySelectorAll('input[type="range"]');
+    sliders.forEach((slider) => {
+      const output = slider.nextElementSibling as HTMLOutputElement;
+      slider.addEventListener("input", () =>
+        updateSliderValue(slider as HTMLInputElement, output)
+      );
+    });
+  });
+</script>
