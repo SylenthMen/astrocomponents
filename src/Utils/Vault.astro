@@ -1,0 +1,63 @@
+---
+// Vault.astro
+interface VaultProps {
+  initialBalance?: number;
+}
+
+const { initialBalance = 0 } = Astro.props as VaultProps;
+---
+
+<div class="bg-gray-100 p-6 rounded-lg shadow-md max-w-md mx-auto">
+  <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">Astro Vault</h2>
+  <div class="mb-4">
+    <p class="text-lg font-semibold text-center text-gray-700">
+      Balance: $<span id="balance">{initialBalance}</span>
+    </p>
+  </div>
+  <div class="flex justify-center space-x-4">
+    <button
+      id="deposit"
+      class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+    >
+      Deposit
+    </button>
+    <button
+      id="withdraw"
+      class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+    >
+      Withdraw
+    </button>
+  </div>
+</div>
+
+<script>
+  let balance = parseInt(
+    document.getElementById("balance")?.textContent || "0"
+  );
+  const depositBtn = document.getElementById("deposit");
+  const withdrawBtn = document.getElementById("withdraw");
+  const balanceElement = document.getElementById("balance");
+
+  function updateBalance(amount: number) {
+    balance += amount;
+    if (balanceElement) {
+      balanceElement.textContent = balance.toString();
+    }
+  }
+
+  depositBtn?.addEventListener("click", () => {
+    const amount = parseInt(prompt("Enter deposit amount:") || "0");
+    if (amount > 0) {
+      updateBalance(amount);
+    }
+  });
+
+  withdrawBtn?.addEventListener("click", () => {
+    const amount = parseInt(prompt("Enter withdrawal amount:") || "0");
+    if (amount > 0 && amount <= balance) {
+      updateBalance(-amount);
+    } else {
+      alert("Invalid withdrawal amount");
+    }
+  });
+</script>

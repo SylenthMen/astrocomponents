@@ -1,0 +1,34 @@
+---
+const { frontmatter } = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{frontmatter.title} - Documentación</title>
+  </head>
+  <body>
+    <main>
+      <h1>{frontmatter.title}</h1>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  .component-example {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  .component-preview {
+    padding: 1rem;
+    background-color: #f8f8f8;
+  }
+  .component-code {
+    padding: 1rem;
+    background-color: #f1f1f1;
+    overflow-x: auto;
+  }
+</style>

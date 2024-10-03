@@ -1,0 +1,35 @@
+---
+
+---
+
+<div
+  id="miDrawer"
+  class="fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out"
+>
+  <div class="p-4">
+    <h2 class="text-lg font-bold mb-4">Mi Drawer</h2>
+    <slot />
+  </div>
+</div>
+
+<script>
+  const drawer = document.getElementById("miDrawer");
+
+  function abrirDrawer() {
+    drawer?.classList.remove("translate-x-full");
+  }
+
+  function cerrarDrawer() {
+    drawer?.classList.add("translate-x-full");
+  }
+
+  // Hacer las funciones disponibles globalmente sin errores de TypeScript
+  window.abrirDrawer = abrirDrawer;
+  window.cerrarDrawer = cerrarDrawer;
+</script>
+
+<script is:inline>
+  // Definir tipos para evitar errores de TypeScript
+  window.abrirDrawer = window.abrirDrawer || function () {};
+  window.cerrarDrawer = window.cerrarDrawer || function () {};
+</script>

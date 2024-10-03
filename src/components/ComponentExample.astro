@@ -1,0 +1,113 @@
+---
+export interface Props {
+  code: string;
+}
+
+const { code } = Astro.props;
+---
+
+<div class="component-example">
+  <div class="component-preview">
+    <slot />
+  </div>
+  <div class="component-code">
+    <div class="code-header">
+      <span>Código</span>
+      <button class="copy-button" data-code={code}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+          ></path>
+        </svg>
+        Copiar
+      </button>
+    </div>
+    <pre><code>{code}</code></pre>
+  </div>
+</div>
+
+<style>
+  .component-example {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .component-preview {
+    padding: 1rem;
+    background-color: #f8f8f8;
+  }
+  .component-code {
+    background-color: #f1f1f1;
+    overflow-x: auto;
+    max-width: 100%; /* Asegura que el código no se desborde */
+  }
+  .code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #e1e1e1;
+    border-bottom: 1px solid #ddd;
+  }
+  .copy-button {
+    display: flex;
+    align-items: center;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .copy-button:hover {
+    background-color: #45a049;
+  }
+  .copy-button svg {
+    margin-right: 0.5rem;
+  }
+  pre {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  code {
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+</style>
+
+<script>
+  document.querySelectorAll(".copy-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const code = button.getAttribute("data-code");
+      if (code) {
+        navigator.clipboard.writeText(code).then(() => {
+          const originalText = button.textContent;
+          button.textContent = "Copiado!";
+          setTimeout(() => {
+            button.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              
+            `;
+          }, 2000);
+        });
+      }
+    });
+  });
+</script>

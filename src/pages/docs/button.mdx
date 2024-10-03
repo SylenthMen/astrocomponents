@@ -1,0 +1,44 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Componente Acordion
+---
+
+import Acordion from '../../components/Acordion.astro';
+import ComponentExample from '../../components/ComponentExample.astro';
+
+# Componente Acordion
+
+El componente `Acordion` es un acordeón personalizable que puede ser utilizado en toda la aplicación.
+
+## Ejemplo Básico
+
+<ComponentExample code={`
+<Acordion
+  styleHeader="bg-neutral-950 text-white"
+  styleContent="bg-neutral-800 text-white"
+  tittleAcordion="Acordeon 1"
+  descriptionAcordion="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+/>
+<Acordion
+  styleHeader="bg-neutral-950 text-white"
+  styleContent="bg-neutral-800 text-white"
+  tittleAcordion="Acordeon 2"
+  descriptionAcordion="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+/>
+`}>
+  <Acordion
+    styleHeader="bg-neutral-950 text-white"
+    styleContent="bg-neutral-800 text-white"
+    tittleAcordion="Acordeon 1"
+    descriptionAcordion="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  />
+  <Acordion
+    styleHeader="bg-neutral-950 text-white"
+    styleContent="bg-neutral-800 text-white"
+    tittleAcordion="Acordeon 2"
+    descriptionAcordion="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+  />
+</ComponentExample>
+
+
+
