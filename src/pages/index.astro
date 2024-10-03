@@ -2,6 +2,25 @@
 import Layout from "../layouts/Layout.astro";
 import BadgeAnimado from "../components/BadgeAnimado.astro";
 
+import Acordion from "../components/Acordion.astro";
+import AlertDialog from "../components/AlertDialog.astro";
+import Avatar from "../components/Avatar.astro";
+import Badge from "../components/Badge.astro";
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import Carrusel from "../components/Carrusel.astro";
+import CheckBox from "../components/CheckBox.astro";
+import ComboBox from "../components/ComboBox.astro";
+import Drawer from "../components/Drawer.astro";
+import FormularioContacto from "../components/FormularioContacto.astro";
+import HoverCard from "../components/HoverCard.astro";
+import Input from "../components/Input.astro";
+import NavBar from "../components/NavBar.astro";
+import RadioGroup from "../components/RadioGroup.astro";
+import Slider from "../components/Slider.astro";
+import SwitchButton from "../components/SwitchButton.astro";
+import Toast from "../components/Toast.astro";
+
 const title = "Astro Starter Kit";
 const description = "Starter kit with Astro and Tailwind CSS";
 ---
@@ -22,4 +41,255 @@ const description = "Starter kit with Astro and Tailwind CSS";
       </p>
     </section>
   </main>
+
+  <div class="flex flex-col items-center justify-center m-auto gap-y-4">
+    <Acordion
+      acordionConteiner="w-96 flex flex-col justify-center items-center m-auto"
+      styleHeader="bg-[#002f24] font-bold rounded-lg text-[#05ce91]"
+      styleContent="bg-neutral-950 rounded-lg"
+      tittleAcordion="Acordeon 1"
+      descriptionAcordion="esto deberia ser una descripcion mas larga para ver si funciona bien"
+    />
+
+    <AlertDialog
+      styleDialog="bg-[#002f24] text-[#05ce91] rounded-lg w-96"
+      colorTitle="text-[#05ce91]"
+      colorText="text-[#05ce91]"
+      styleButtonDialog="border border-[#05ce91] hover:bg-[#002f24] hover:text-[#05ce91] text-white font-bold py-2 px-4 rounded"
+      tittleAlert="Titulo de la alerta"
+      textButton="Cerrar"
+      descriptionAlert="aqui va el texto de la alerta"
+    />
+
+    <Avatar
+      name="imagen del logotipo de skull island records"
+      image=""
+      fallback="avatar"
+      size="w-16 h-16"
+    />
+
+    <Badge text="articulo nuevo" estado="nuevo" />
+    <Badge text="articulo aprobado" estado="aprovado" />
+    <Badge text="articulo borrado" estado="borrado" />
+    <Badge text="articulo pendiente" estado="pendiente" />
+
+    <BadgeAnimado enlace="#" texto="Aqui comienza la aventura" />
+
+    <a href="enlace">
+      <Button nameButton="continuar" colorText="text-[#05ce91]" />
+    </a>
+
+    <Button nameButton="continuar" colorText="text-[#05ce91]" />
+
+    <Card
+      title="Titulo de la tarjeta"
+      description="hola soy una descripcion de la tarjeta"
+      image="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+      cardStyle="bg-[#002f24] backdrop-blur-md text-[#05ce91]"
+      titleStyle="text-[#05ce91] font-bold text-2xl"
+      descriptionStyle="text-[#05ce91]"
+    />
+
+    <Carrusel containerWidth="w-96" />
+
+    <CheckBox
+      tittleCheckBox="aceptar terminos y condiciones"
+      styleCheckBox="w-6 h-6 checked:bg-green-500 rounded-md border checked:after:content-['✅']"
+    />
+
+    <ComboBox
+      titleComboBox="Elije tu lenguaje favorito:"
+      textComboBox="Selecciona un lenguaje de programación"
+      styleCombo="bg-neutral-950 text-white"
+      styleInput="border-b border-neutral-800 bg-neutral-800 text-purple-500 focus:outline-none"
+      styleBoxOptions="bg-neutral-950 text-white"
+      styleOptions="text-[#05ce91] hover:bg-[#002f24] cursor-pointer"
+      widthCombo="w-96"
+    />
+
+    <Drawer
+      title="Drawer"
+      description="Este es un ejemplo de drawer"
+      drawerStyle="bg-neutral-950 text-white"
+      styleTitle="text-white"
+      styleDescription="text-white"
+    >
+      <p class="text-white">Contenido del drawer</p>
+      <ul class="text-white">
+        <li>Elemento A</li>
+        <li>Elemento B</li>
+        <li>Elemento C</li>
+      </ul>
+    </Drawer>
+
+    <FormularioContacto
+      titleStyle="text-white font-bold text-3xl mb-6 text-center"
+      titleFormulario="Contactanos"
+      styleFormulario="bg-gradient-to-r from-[#05ce9135] to-indigo-600/35 backdrop-blur-sm"
+      colorLabel="text-white"
+    />
+
+    <p class="mb-4">
+      Pasa el mouse sobre
+      <HoverCard
+        widthCard="w-24"
+        colorCard="bg-neutral-950/55 text-white backdrop-blur-sm"
+        triggerText="este texto"
+        title="Información Adicional"
+        description="Este es un ejemplo de HoverCard que muestra información adicional al pasar el mouse sobre el texto."
+      />
+      para ver el HoverCard en acción.
+    </p>
+
+    <Input
+      labelInput="Nombre del input:"
+      placeHolder="Aqui va lo que necesitas"
+      styleLabel="text-white"
+      styleInput="bg-[#002f24] text-[#05ce91] p-4 rounded-md text-md focus:outline-none"
+      inputType="text"
+      fileAcepted="*"
+    />
+
+    <div class="w-full mb-8">
+      <NavBar title="title" callAction="comenzar" />
+    </div>
+
+    <RadioGroup
+      name="opcion"
+      options={[
+        { value: "1", label: "opcion 1" },
+        { value: "2", label: "opcion 2" },
+        { value: "3", label: "opcion 3" },
+        { value: "4", label: "opcion 4" },
+      ]}
+      defaultValue="1"
+    />
+
+    <Slider
+      min={0}
+      max={100}
+      step={1}
+      defaultValue={50}
+      id="example-slider"
+      name="example-slider"
+      labelText="Ejemplo de Slider"
+      sliderClass="accent-[#05ce91] hover:accent-green-400 bg-[#002f24] w-96 h-2"
+      labelClass="text-white"
+      valueClass="font-semibold text-white"
+    />
+
+    <SwitchButton
+      id="switch1"
+      name="switch1"
+      label="Switch Básico"
+      onChange="console.log('Switch 1 cambiado:', event.target.checked)"
+    />
+
+    <SwitchButton
+      id="switch2"
+      name="switch2"
+      label="Switch Preseleccionado"
+      checked={true}
+      onChange="console.log('Switch 2 cambiado:', event.target.checked)"
+    />
+
+    <SwitchButton
+      id="switch3"
+      name="switch3"
+      label="Switch Deshabilitado"
+      disabled={true}
+      onChange="console.log('Switch 3 cambiado:', event.target.checked)"
+    />
+
+    <SwitchButton
+      id="switch4"
+      name="switch4"
+      label="Switch Personalizado"
+      switchClass="bg-[#002f24] peer-checked:bg-purple-600"
+      labelClass="text-purple-600 font-bold"
+      onChange="console.log('Switch 4 cambiado:', event.target.checked)"
+    />
+
+    <div class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold mb-4">Ejemplo de Toast</h1>
+      <div class="space-x-2">
+        <button
+          id="showSuccessToast"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Toast Éxito
+        </button>
+        <button
+          id="showErrorToast"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Toast Error
+        </button>
+        <button
+          id="showInfoToast"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Toast Info
+        </button>
+        <button
+          id="showWarningToast"
+          class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Toast Advertencia
+        </button>
+      </div>
+
+      <Toast
+        id="toast-success"
+        message="¡Operación exitosa!"
+        type="success"
+        duration={3000}
+        position="top-right"
+      />
+      <Toast
+        id="toast-error"
+        message="Ha ocurrido un error."
+        type="error"
+        duration={3000}
+        position="top-right"
+      />
+      <Toast
+        id="toast-info"
+        message="Información importante."
+        type="info"
+        duration={3000}
+        position="top-right"
+      />
+      <Toast
+        id="toast-warning"
+        message="Advertencia: acción requerida."
+        type="warning"
+        duration={3000}
+        position="top-right"
+      />
+    </div>
+
+    <script>
+      document
+        .getElementById("showSuccessToast")
+        ?.addEventListener("click", () => {
+          (window as any).toastManager.show("toast-success");
+        });
+      document
+        .getElementById("showErrorToast")
+        ?.addEventListener("click", () => {
+          (window as any).toastManager.show("toast-error");
+        });
+      document
+        .getElementById("showInfoToast")
+        ?.addEventListener("click", () => {
+          (window as any).toastManager.show("toast-info");
+        });
+      document
+        .getElementById("showWarningToast")
+        ?.addEventListener("click", () => {
+          (window as any).toastManager.show("toast-warning");
+        });
+    </script>
+  </div>
 </Layout>
