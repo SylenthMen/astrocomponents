@@ -1,71 +1,100 @@
 ---
-const { nameButton, colorText } = Astro.props;
+interface Props {
+  nameButton: string;
+  colorText?: string;
+  colorBackground?: string;
+  colorBorder?: string;
+  onClick?: string;
+  styleButton?: string;
+}
+
+const {
+  nameButton,
+  colorText = "text-white",
+  colorBackground = "bg-[#002f24]",
+  colorBorder = "border-[#002f24]",
+  onClick,
+  styleButton,
+} = Astro.props;
 ---
 
-<button class=`button ${colorText}`>{nameButton}</button>
+<button
+  class={`button ${colorText} ${colorBackground} ${colorBorder} ${styleButton} inline-block px-6 py-3 border border-solid border-[#4f4f4f] rounded text-lg cursor-pointer transition-all duration-200 ease-in overflow-hidden relative z-10`}
+  data-color-background={colorBackground.split("-")[1]}
+  data-color-border={colorBorder.split("-")[1]}
+  onclick={onClick}
+>
+  {nameButton}
+  <slot />
+</button>
 
 <style>
-  :root {
-    --colorBackground: #002f24;
-    --colorBorder: #002f24;
-  }
-
   .button {
-    display: inline-block;
-    padding: 12px 24px;
-    border: 1px solid #4f4f4f;
-    border-radius: 4px;
-    transition: all 0.2s ease-in;
     position: relative;
     overflow: hidden;
-    font-size: 19px;
-    cursor: pointer;
-    z-index: 1;
   }
 
-  .button:before {
+  .button::before,
+  .button::after {
     content: "";
     position: absolute;
     left: 50%;
-    transform: translateX(-50%) scaleY(1) scaleX(1.25);
-    top: 100%;
     width: 140%;
     height: 180%;
-    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 50%;
     display: block;
     transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
     z-index: -1;
+    opacity: 0;
   }
 
-  .button:after {
-    content: "";
-    position: absolute;
-    left: 55%;
+  .button::before {
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .button::after {
     transform: translateX(-50%) scaleY(1) scaleX(1.45);
     top: 180%;
     width: 160%;
     height: 190%;
-    background-color: var(--colorBackground);
-    border-radius: 50%;
-    display: block;
-    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
-    z-index: -1;
   }
 
-  .button:hover {
-    border: 1px solid var(--colorBorder);
-  }
-
-  .button:hover:before {
+  .button:hover::before {
     top: -35%;
-    background-color: var(--colorBackground);
+    background-color: var(--hover-bg, #002f24);
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+    opacity: 1;
   }
 
-  .button:hover:after {
+  .button:hover::after {
     top: -45%;
-    background-color: var(--colorBackground);
+    background-color: var(--hover-bg, #002f24);
     transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+    opacity: 1;
   }
 </style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const buttons = document.querySelectorAll(".button");
+    buttons.forEach((button) => {
+      if (button instanceof HTMLElement) {
+        const bgColor = button.getAttribute("data-color-background");
+        const borderColor = button.getAttribute("data-color-border");
+
+        button.addEventListener("mouseenter", () => {
+          button.style.setProperty("--tw-border-opacity", "1");
+          button.style.borderColor = `rgb(var(--${borderColor}) / var(--tw-border-opacity))`;
+          button.style.setProperty("--hover-bg", `rgb(var(--${bgColor}))`);
+        });
+
+        button.addEventListener("mouseleave", () => {
+          button.style.borderColor = "";
+          button.style.removeProperty("--hover-bg");
+        });
+      }
+    });
+  });
+</script>

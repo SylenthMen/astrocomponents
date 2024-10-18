@@ -3,20 +3,9 @@ interface Language {
   value: string;
   label: string;
 }
-//AQUI VAN LAS OPCIONES QUE QUIERES MOSTRAR
-const languages: Language[] = [
-  { value: "javascript", label: "JavaScript" },
-  { value: "python", label: "Python" },
-  { value: "java", label: "Java" },
-  { value: "csharp", label: "C#" },
-  { value: "php", label: "PHP" },
-  { value: "ruby", label: "Ruby" },
-  { value: "go", label: "Go" },
-  { value: "typescript", label: "TypeScript" },
-];
 
-//TIPADO PARA LAS PROPS DE LOS COMPONENTES
 interface Props {
+  options: Language[];
   titleComboBox?: string;
   textComboBox?: string;
   styleCombo?: string;
@@ -26,47 +15,48 @@ interface Props {
   widthCombo?: string;
 }
 
-const { styleCombo = "bg-white text-black border border-gray-300" } =
-  Astro.props;
-
 const {
+  options,
   titleComboBox = "Elige un lenguaje",
   textComboBox = "Elija un lenguaje",
+  styleCombo = "bg-white text-black border border-gray-300",
+  styleBoxOptions = "bg-white text-white",
+  styleOptions = "hover:bg-green-500 cursor-pointer",
+  styleInput = "border-b border-gray-300 text-black focus:outline-none",
+  widthCombo = "w-full",
 } = Astro.props;
-
-const { styleBoxOptions = "bg-white text-white" } = Astro.props;
-const { styleOptions = "hover:bg-green-500 cursor-pointer" } = Astro.props;
-const {styleInput = "border-b border-gray-300 text-black focus:outline-none"} = Astro.props;
-const {widthCombo = "w-full"} = Astro.props;
 ---
 
-<div class=`combo-box-wrapper ${widthCombo}`>
-  <label for="language-select" class="block mb-2 font-bold text-black dark:text-white"
-    >{titleComboBox}</label
+<div class={`combo-box-wrapper ${widthCombo}`}>
+  <label
+    for="language-select"
+    class="block mb-2 font-bold text-black dark:text-white"
   >
+    {titleComboBox}
+  </label>
   <div id="custom-select" class="relative">
     <div
       id="selected-option"
-      class=`${styleCombo} flex justify-between items-center cursor-pointer rounded-md p-4 font-bold`
+      class={`${styleCombo} flex justify-between items-center cursor-pointer rounded-md p-4 font-bold`}
     >
       <span>{textComboBox}</span>
       <span class="arrow transition-transform duration-300">&#9660;</span>
     </div>
     <div
       id="options-container"
-      class=`absolute top-full left-0 w-full ${styleBoxOptions}  rounded-md mt-1 max-h-0 overflow-hidden transition-all duration-300`
+      class={`absolute top-full left-0 w-full ${styleBoxOptions} rounded-md mt-1 max-h-0 overflow-hidden transition-all duration-300`}
     >
       <input
         type="text"
         id="search-input"
-        class=`w-full p-2 ${styleInput}`
+        class={`w-full p-2 ${styleInput}`}
         placeholder="Buscar..."
       />
       <ul id="options-list" class="text-black">
         {
-          languages.map((language) => (
-            <li class=`p-2 ${styleOptions}` data-value={language.value}> 
-              {language.label}
+          options.map((option) => (
+            <li class={`p-2 ${styleOptions}`} data-value={option.value}>
+              {option.label}
             </li>
           ))
         }
@@ -76,9 +66,6 @@ const {widthCombo = "w-full"} = Astro.props;
 </div>
 
 <script>
-  //puedes separar la logica en un archivo javascript e importarlo
-  //para que tengas un codigo mas limpio
-
   function initComboBox() {
     const customSelect = document.getElementById(
       "custom-select"
@@ -155,10 +142,10 @@ const {widthCombo = "w-full"} = Astro.props;
     });
   }
 
-  // Ejecutar la inicialización después de que el DOM esté completamente cargado
+  // Execute initialization after the DOM is fully loaded
   document.addEventListener("DOMContentLoaded", initComboBox);
 
-  // Para compatibilidad con la navegación del lado del cliente de Astro
+  // For compatibility with Astro's client-side navigation
   document.addEventListener("astro:page-load", initComboBox);
 </script>
 

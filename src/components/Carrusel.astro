@@ -1,14 +1,18 @@
 ---
-const { containerWidth = "w-full" } = Astro.props;
-const images = [
-  { src: "/1.jpeg", alt: "Descripción de la imagen 1" },
-  { src: "/2.jpeg", alt: "Descripción de la imagen 2" },
-  { src: "/3.jpeg", alt: "Descripción de la imagen 3" },
-  // Agrega más imágenes según sea necesario
-];
+interface Image {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  images: Image[];
+  containerWidth?: string;
+}
+
+const { images, containerWidth = "w-full" } = Astro.props;
 ---
 
-<div class=`relative ${containerWidth} max-w-3xl mx-auto`>
+<div class={`relative ${containerWidth} max-w-3xl mx-auto`}>
   <div class="overflow-hidden">
     <div
       id="carousel"
@@ -117,7 +121,7 @@ const images = [
     }
   });
 
-  // Manejar las teclas de flecha y Escape
+  // Handle arrow keys and Escape
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
       prevBtn.click();
